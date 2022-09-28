@@ -1,0 +1,3 @@
+if( numero == numero2 ) {
+    numero = numero2;
+}

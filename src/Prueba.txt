@@ -1,3 +1,12 @@
-if( numero == numero2 ) {
-    numero = numero2;
+public class sumaEnteros{
+    
+    public static void main(String[] args){
+        
+        Scanner lector = new Scanner(System.in);
+        int numero1 = lector.nextInt();
+        int numero2 = lector.nextInt();
+        
+        byte suma = numero1 + numero2;
+        System.out.println(suma);
+    }
 }

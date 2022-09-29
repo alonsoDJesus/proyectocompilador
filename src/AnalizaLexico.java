@@ -47,7 +47,7 @@ public class AnalizaLexico {
         corrobora que esta si exista (es decir que su valor no sea nulo).
         */
         while( (linea=br.readLine()) != null){
-            cadena += linea + "\n"; // La variable de cadena concatena a su contenido la línea obtenida y luego un salto de línea.
+            cadena += linea + "\n"; // La variable de cadena concatena a su contenido la línea de texto obtenida y luego un salto de línea.
             ctaLinea ++; // El contador incrementa en uno llevando así un conteo de las líneas. 
         }
         
@@ -66,7 +66,7 @@ public class AnalizaLexico {
         
         // Ciclo para un tratamiento individual hacia cada token.
         while(tokens.hasMoreTokens()){ // El ciclo se ejecuta entre tanto que haya tokens disponibles por analizar.
-            expRegulares(tokens.nextToken()); // Se toma el token más cercano y se envía a un método que lo comparará con expresiones regulares.
+            expRegulares(tokens.nextToken()); // Se toma un token por turno y se envía a un método que lo comparará con distintas expresiones regulares.
             i++;
         }
     }
@@ -171,15 +171,15 @@ public class AnalizaLexico {
         // Búsqueda de resultados en los tokens.
         if(matPR.find()){ // Si se encontró que el token posee una coincidencia con una palabra reservada:
             System.out.println(matPR.group() + "<palabra reservada " + matPR.group().toUpperCase() + " >"); // Se especifica que es palabra reservada y se indica cuál es.
-        }else if(matTD.find()){ // Por el contrario, si se encontró que el token posee una coincidenccia con una palabra referente a un tipo de dato:
+        }else if(matTD.find()){ // Por el contrario, si se encontró que el token posee una coincidencia con una palabra referente a un tipo de dato:
             System.out.println(matTD.group() + "<tipo de dato " + matTD.group().toUpperCase() + " >"); // Se especifica que es tipo de dato y se indica cuál es.
         }else if(matId.find()){ // Por el contrario, si se tiene que la palabra corresponde a un identificador de variable o constante:
             System.out.println(matId.group() + "<identificador " + matId.group().toUpperCase() + " >"); // Se especifica que es identificador y se indica cuál es.
         }else if(matOR.find()){ // Por el contrario, si se encontró que el token posee una coincidenccia con un operador relacional:
             System.out.println(matOR.group()+ "<operador relacional " + matOR.group().toUpperCase() + ">"); // Se especifica que es operador relacional y se indica cuál es.
-        } else if(matOL.find()){ // Por el contrario, se encuentra que el token contiene un símbolo de operador lógico.
+        } else if(matOL.find()){ // Por el contrario, si se encuentra que el token contiene un símbolo de operador lógico.
             System.out.println(matOL.group() + "<operador logico " + matOL.group().toUpperCase() + " >"); // Se especifica que es operador lógico y se indica cuál es.
-        } else if(matOA.find()){ // Si se encuentra que el token contiene un símbolo de operador aritmético.
+        } else if(matOA.find()){ // Por el contrario, si se encuentra que el token contiene un símbolo de operador aritmético.
             System.out.println(matOA.group() + "<operador aritmetico " + matOA.group().toUpperCase() + " >"); // Se especifica que es operador aritmético y se indica cuál es.
         }
         

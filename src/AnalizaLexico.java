@@ -74,33 +74,78 @@ public class AnalizaLexico {
     // Método para analizar tokens en base a expresiones regulares.
     public static void expRegulares(String token){
         // Patrón o expresión regular 1: Contiene las palabras reservadas del lenguaje de Java.
-        Pattern palRes = Pattern.compile("abstract|continue|for|new|switch|"
-                                        + "assert|default|goto|package|synchronized|"
-                                        + "do|if|private|this|"
-                                        + "break|implements|protected|throw|"
-                                        + "else|import|public|throws|"
-                                        + "case|enum|instanceof|return|transient|"
-                                        + "catch|extends|short|try|"
-                                        + "final|interface|static|void|"
-                                        + "class|finally|strictfp|volatile|"
-                                        + "const|float|native|super|while|main");
+        Pattern palRes = Pattern.compile("\\babstract\\b|"
+                                        + "\\bcontinue\\b|"
+                                        + "\\bfor\\b|"
+                                        + "\\bnew\\b|"
+                                        + "\\bswitch\\b|"
+                                        + "\\bassert\\b|"
+                                        + "\\bdefault\\b|"
+                                        + "\\bgoto\\b|"
+                                        + "\\bpackage\\b|"
+                                        + "\\bsynchronized\\b|"
+                                        + "\\bdo\\b|"
+                                        + "\\bif\\b|"
+                                        + "\\bprivate\\b|"
+                                        + "\\bthis\\b|"
+                                        + "\\bbreak\\b|"
+                                        + "\\bimplements\\b|"
+                                        + "\\bprotected\\b|"
+                                        + "\\bthrow\\b|"
+                                        + "\\belse\\b|"
+                                        + "\\bimport\\b|"
+                                        + "\\bpublic\\b|"
+                                        + "\\bthrows\\b|"
+                                        + "\\bcase\\b|"
+                                        + "\\benum\\b|"
+                                        + "\\binstanceof\\b|"
+                                        + "\\breturn\\b|"
+                                        + "\\btransient\\b|"
+                                        + "\\bcatch\\b|"
+                                        + "\\bextends\\b|"
+                                        + "\\bshort\\b|"
+                                        + "\\btry\\b|"
+                                        + "\\bfinal\\b|"
+                                        + "\\binterface\\b|"
+                                        + "\\bstatic\\b|"
+                                        + "\\bvoid\\b|"
+                                        + "\\bclass\\b|"
+                                        + "\\bfinally\\b|"
+                                        + "\\bstrictfp\\b|"
+                                        + "\\bvolatile\\b|"
+                                        + "\\bconst\\b|"
+                                        + "\\bfloat\\b|"
+                                        + "\\bnative\\b|"
+                                        + "\\bsuper\\b|"
+                                        + "\\bwhile\\b|"
+                                        + "\\bmain\\b");
         
         // Patrón o expresión regular 2: Contiene los tipos de datos primitivos del lenguaje de Java.
-        Pattern tipoDato = Pattern.compile("int|float|double|long|byte|boolean|String|char|short");
+        Pattern tipoDato = Pattern.compile("\\bint\\b|"
+                                        + "\\bfloat\\b|"
+                                        + "\\bdouble\\b|"
+                                        + "\\blong\\b|"
+                                        + "\\bbyte\\b|"
+                                        + "\\bboolean\\b|"
+                                        + "\\bString\\b|"
+                                        + "\\bchar\\b|"
+                                        + "\\bshort\\b");
         
         // Patrón o expresión regular 3: Contiene los símbolos de los operadores aritméticos empleados en Java.
         Pattern operadorAritmetico = Pattern.compile("\\+|\\*|\\/|\\-|\\%");
         
         // Patrón o expresión regular 4: Contiene los símbolos de los operadores lógicos utilizados en Java.
-        Pattern operadorLogico = Pattern.compile("\\=\\=|"
-                                                + "\\!\\=|"
-                                                + "\\<|"
-                                                + "\\<\\=|"
-                                                + "\\>|"
-                                                + "\\>\\=|"
-                                                + "\\&\\&|"
-                                                + "\\!"
+        Pattern operadorLogico = Pattern.compile("\\&\\&|"
+                                                + "\\!|"
                                                 + "\\|\\|");
+        
+        // Patrón o expresión regular 5: Contiene los símbolos de los operadores relacionales utilizados en Java.
+        Pattern operadorRelacional = Pattern.compile("\\=\\=|"
+                                                + "\\!\\=|"
+                                                + "\\<\\=|"
+                                                + "\\>\\=|"
+                                                + "\\>|"
+                                                + "\\<");
         
         /*
         Patrón o expresión regular 5: Detecta nombres de idetificadores para variables y 
@@ -121,24 +166,22 @@ public class AnalizaLexico {
         Matcher matOA = operadorAritmetico.matcher(token);
         Matcher matOL = operadorLogico.matcher(token);
         Matcher matId = identificador.matcher(token);
+        Matcher matOR = operadorRelacional.matcher(token);
         
         // Búsqueda de resultados en los tokens.
         if(matPR.find()){ // Si se encontró que el token posee una coincidencia con una palabra reservada:
-            System.out.println(matPR.group() + "<palabra reservada " + matPR.group().toUpperCase() + " >"); // Se especifica que es palabra reserevada y se indica cuál es.
+            System.out.println(matPR.group() + "<palabra reservada " + matPR.group().toUpperCase() + " >"); // Se especifica que es palabra reservada y se indica cuál es.
         }else if(matTD.find()){ // Por el contrario, si se encontró que el token posee una coincidenccia con una palabra referente a un tipo de dato:
             System.out.println(matTD.group() + "<tipo de dato " + matTD.group().toUpperCase() + " >"); // Se especifica que es tipo de dato y se indica cuál es.
-        }else if(matId.find()){ // Si no es ninguno de los casos, y se tiene que la palabra corresponde a un identificador de variable o constante:
+        }else if(matId.find()){ // Por el contrario, si se tiene que la palabra corresponde a un identificador de variable o constante:
             System.out.println(matId.group() + "<identificador " + matId.group().toUpperCase() + " >"); // Se especifica que es identificador y se indica cuál es.
-        }
-        
-        
-        if(matOA.find()){ // Si se encuentra que el token contiene un símbolo de operador aritmético.
+        }else if(matOR.find()){ // Por el contrario, si se encontró que el token posee una coincidenccia con un operador relacional:
+            System.out.println(matOR.group()+ "<operador relacional " + matOR.group().toUpperCase() + ">"); // Se especifica que es operador relacional y se indica cuál es.
+        } else if(matOL.find()){ // Por el contrario, se encuentra que el token contiene un símbolo de operador lógico.
+            System.out.println(matOL.group() + "<operador logico " + matOL.group().toUpperCase() + " >"); // Se especifica que es operador lógico y se indica cuál es.
+        } else if(matOA.find()){ // Si se encuentra que el token contiene un símbolo de operador aritmético.
             System.out.println(matOA.group() + "<operador aritmetico " + matOA.group().toUpperCase() + " >"); // Se especifica que es operador aritmético y se indica cuál es.
         }
         
-        if(matOL.find()){ // Si se encuentra que el token contiene un símbolo de operador lógico.
-            System.out.println(matOL.group() + "<operador logico " + matOL.group().toUpperCase() + " >"); // Se especifica que es operador lógico y se indica cuál es.
-        }
-
     }
 }
